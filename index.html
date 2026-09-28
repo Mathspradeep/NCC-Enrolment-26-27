@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NCC Selection Portal & ANO Dashboard</title>
+  <title>NCC Selection Portal - Advanced Assessment & Multi-ANO Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 min-h-screen">
 
   <!-- Navigation Bar -->
-  <header class="bg-indigo-900 text-white shadow-lg">
+  <header class="bg-indigo-950 text-white shadow-xl border-b-4 border-amber-500">
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
       <div class="flex items-center space-x-3">
-        <div class="bg-red-600 w-4 h-8 rounded-s"></div>
-        <div class="bg-blue-600 w-4 h-8"></div>
-        <div class="bg-sky-400 w-4 h-8 rounded-e"></div>
-        <span class="text-xl font-bold tracking-wide">NCC SELECTION PORTAL</span>
+        <div class="bg-red-600 w-3 h-8 rounded-s"></div>
+        <div class="bg-blue-800 w-3 h-8"></div>
+        <div class="bg-sky-400 w-3 h-8 rounded-e"></div>
+        <span class="text-xl font-extrabold tracking-wider">NCC SELECTION PORTAL</span>
       </div>
-      <nav class="flex space-x-4 mt-2 sm:mt-0">
-        <button id="btn-student" onclick="switchTab('student')" class="px-4 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600 font-semibold transition">Candidate Test</button>
-        <button id="btn-ano" onclick="switchTab('ano')" class="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold transition">ANO Dashboard 🔒</button>
+      <nav class="flex space-x-3 mt-3 sm:mt-0">
+        <button id="nav-btn-student" onclick="switchPortal('student')" class="px-4 py-2 rounded-lg bg-indigo-800 hover:bg-indigo-700 font-semibold text-sm transition">Assessment Login</button>
+        <button id="nav-btn-admin" onclick="switchPortal('admin')" class="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm transition">ANO Portal 🔒</button>
       </nav>
     </div>
   </header>
@@ -27,134 +27,167 @@
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto p-4 sm:p-6">
 
-    <!-- TAB 1: STUDENT WRITTEN TEST PORTAL -->
-    <section id="tab-student-view" class="space-y-6">
+    <!-- 1. ASSESSMENT LOGIN & CANDIDATE TEST PORTAL -->
+    <section id="portal-student" class="space-y-6">
       
-      <!-- Student Registration Form -->
-      <div id="student-reg-card" class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto">
-        <h2 class="text-2xl font-bold text-indigo-900 mb-1">Written Test Registration</h2>
-        <p class="text-slate-600 text-sm mb-6">30 Multiple Choice Questions (1 Mark Each = 30 Marks Total). Marks will be kept confidential and accessible only by the ANO.</p>
+      <!-- Assessment Login Form -->
+      <div id="student-login-card" class="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto border border-slate-200">
+        <div class="border-b pb-4 mb-6">
+          <span class="bg-indigo-100 text-indigo-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Cadet Portal</span>
+          <h2 class="text-2xl font-black text-indigo-950 mt-2">Candidate Assessment Login</h2>
+          <p class="text-slate-600 text-sm mt-1">30 Advanced MCQs (10 Current Affairs, 10 Math Aptitude, 10 Logical Reasoning). Time Limit: 30 Minutes.</p>
+        </div>
         
-        <form id="student-reg-form" onsubmit="startTest(event)" class="space-y-4">
+        <form id="student-login-form" onsubmit="startAssessment(event)" class="space-y-4">
           <div>
-            <label class="block text-sm font-semibold mb-1">Full Name *</label>
-            <input type="text" id="std-name" required class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. Cadet Rahul Sharma" />
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Full Name *</label>
+            <input type="text" id="std-name" required class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder="e.g. Cadet Rahul Sharma" />
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-semibold mb-1">Reg/Roll No. *</label>
-              <input type="text" id="std-roll" required class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. 2026/NCC/102" />
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Reg/Roll No. *</label>
+              <input type="text" id="std-roll" required class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder="e.g. 2026/NCC/102" />
             </div>
             <div>
-              <label class="block text-sm font-semibold mb-1">Department / Stream *</label>
-              <input type="text" id="std-dept" required class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. B.Sc Computer Science" />
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Department / Stream *</label>
+              <input type="text" id="std-dept" required class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder="e.g. B.Sc Computer Science" />
             </div>
           </div>
           <div>
-            <label class="block text-sm font-semibold mb-1">Mobile Number *</label>
-            <input type="tel" id="std-phone" required pattern="[0-9]{10}" class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="10-digit mobile number" />
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Mobile Number *</label>
+            <input type="tel" id="std-phone" required pattern="[0-9]{10}" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-indigo-600 outline-none" placeholder="10-digit mobile number" />
           </div>
 
-          <button type="submit" class="w-full bg-indigo-800 hover:bg-indigo-900 text-white font-bold py-3 rounded-lg shadow-md transition">Start 30 MCQ Written Test</button>
+          <button type="submit" class="w-full bg-indigo-900 hover:bg-indigo-950 text-white font-bold py-3.5 rounded-lg shadow-md transition text-lg mt-2">Authenticate & Start Written Test</button>
         </form>
       </div>
 
       <!-- Test Area -->
-      <div id="test-container" class="hidden bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
+      <div id="test-container" class="hidden bg-white rounded-xl shadow-lg p-6 max-w-4xl mx-auto border border-slate-200">
         <div class="flex justify-between items-center border-b pb-4 mb-6">
           <div>
-            <h3 class="text-xl font-bold text-indigo-900" id="candidate-heading">Candidate: -</h3>
-            <p class="text-sm text-slate-500">30 Questions | 1 Mark Each | Total: 30 Marks</p>
+            <h3 class="text-xl font-black text-indigo-950" id="candidate-heading">Candidate: -</h3>
+            <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Stage 2: Advanced Written Examination (Current Affairs, Math & Logic)</p>
           </div>
-          <div class="text-right">
-            <span class="text-xs uppercase text-slate-500 font-semibold block">Time Remaining</span>
-            <span id="timer" class="text-xl font-mono font-bold text-red-600">30:00</span>
+          <div class="text-right bg-red-50 border border-red-200 px-4 py-2 rounded-lg">
+            <span class="text-[10px] uppercase text-red-600 font-bold block">Time Remaining</span>
+            <span id="timer" class="text-xl font-mono font-black text-red-700">30:00</span>
           </div>
         </div>
 
         <form id="mcq-form" onsubmit="submitWrittenTest(event)" class="space-y-6">
           <div id="questions-list" class="space-y-6"></div>
 
-          <div class="pt-6 border-t flex justify-between items-center">
-            <p class="text-xs text-slate-500">Check all answers before submitting.</p>
-            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition">Submit Test</button>
+          <div class="pt-6 border-t flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-slate-500">Review all technical and analytical questions carefully before final submission.</p>
+            <button type="submit" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-extrabold px-10 py-3.5 rounded-lg shadow-lg transition">Submit Assessment</button>
           </div>
         </form>
       </div>
 
-      <!-- Submission Success Screen -->
-      <div id="success-card" class="hidden bg-white rounded-xl shadow-md p-8 max-w-md mx-auto text-center space-y-4">
+      <!-- Submission Confirmation Screen -->
+      <div id="success-card" class="hidden bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto text-center space-y-4 border border-slate-200">
         <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">✓</div>
-        <h3 class="text-2xl font-bold text-slate-800">Test Submitted!</h3>
-        <p class="text-slate-600 text-sm">Your responses have been saved and submitted to the selection log.</p>
-        <p class="text-xs text-amber-800 bg-amber-50 p-3 rounded-lg border border-amber-200">🔒 Marks are confidential and accessible only by the Associate NCC Officer (ANO).</p>
-        <button onclick="resetTestForm()" class="bg-indigo-800 text-white px-6 py-2 rounded-lg hover:bg-indigo-900 font-semibold">New Candidate Entry</button>
+        <h3 class="text-2xl font-extrabold text-slate-900">Assessment Submitted!</h3>
+        <p class="text-slate-600 text-sm">Your answers have been processed and transmitted to the ANO Master Log.</p>
+        <p class="text-xs text-amber-800 bg-amber-50 p-3 rounded-lg border border-amber-200 font-semibold">🔒 Marks are confidential and accessible only by authorized selection officers.</p>
+        <button onclick="resetAssessment()" class="bg-indigo-900 text-white px-6 py-2.5 rounded-lg hover:bg-indigo-950 font-bold transition">New Candidate Login</button>
       </div>
 
     </section>
 
 
-    <!-- TAB 2: ANO SECURE DASHBOARD -->
-    <section id="tab-ano-view" class="hidden space-y-6">
+    <!-- 2. ADMIN / MULTI-ANO DASHBOARD PORTAL -->
+    <section id="portal-admin" class="hidden space-y-6">
       
-      <!-- ANO Login Box -->
-      <div id="ano-login-card" class="bg-white rounded-xl shadow-md p-6 max-w-md mx-auto">
+      <!-- Multi-ANO Login Form -->
+      <div id="admin-login-card" class="bg-white rounded-xl shadow-lg p-6 max-w-md mx-auto border border-slate-200">
         <div class="text-center mb-6">
-          <span class="text-4xl">🎖️</span>
-          <h2 class="text-2xl font-bold text-indigo-900 mt-2">ANO Login</h2>
-          <p class="text-xs text-slate-500 mt-1">Authorized access only (Passcode: <code class="bg-slate-200 px-1 py-0.5 rounded font-bold">ANO123</code>)</p>
+          <span class="text-5xl">🎖️</span>
+          <h2 class="text-2xl font-black text-indigo-950 mt-3">ANO Officer Portal</h2>
+          <p class="text-xs text-slate-500 mt-1">Sign in with your assigned Associate Officer credentials</p>
         </div>
-        <div class="space-y-4">
+        
+        <form onsubmit="authenticateAno(event)" class="space-y-4">
           <div>
-            <label class="block text-sm font-semibold mb-1">Enter PIN</label>
-            <input type="password" id="ano-pin" class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none text-center text-lg tracking-widest" placeholder="••••••" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">Username / ID *</label>
+            <input type="text" id="ano-username" required class="w-full border rounded-lg p-3 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="e.g. ano_army" />
           </div>
-          <button onclick="authenticateANO()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-2.5 rounded-lg transition">Unlock Dashboard</button>
-          <p id="login-error" class="text-red-500 text-xs text-center hidden">Invalid Passcode. Please try again.</p>
-        </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
+            <div class="relative">
+              <input type="password" id="ano-password" required class="w-full border rounded-lg p-3 pr-10 text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="••••••••" />
+              <button type="button" onclick="togglePinVisibility('ano-password')" class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm" title="Show/Hide Password">👁️</button>
+            </div>
+          </div>
+          
+          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-lg transition text-base shadow-md">Sign In as Officer</button>
+          
+          <div class="flex justify-between items-center text-xs text-slate-500 pt-1">
+            <button type="button" onclick="showDefaultCredentialsAlert()" class="text-indigo-700 hover:underline font-semibold">View Default Logins</button>
+            <button type="button" onclick="showResetModal()" class="text-indigo-700 hover:underline font-semibold">Forgot Password?</button>
+          </div>
+
+          <p id="admin-login-error" class="text-red-600 text-xs text-center font-bold hidden">Invalid Username or Password. Access Denied.</p>
+        </form>
       </div>
 
-      <!-- ANO Main Dashboard -->
-      <div id="ano-dashboard-content" class="hidden space-y-6">
+      <!-- Admin Main Dashboard -->
+      <div id="admin-dashboard-content" class="hidden space-y-6">
         
-        <!-- Summary Cards -->
+        <!-- Active Session Officer Info Bar -->
+        <div class="bg-indigo-950 text-white p-4 rounded-xl shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-l-4 border-amber-500">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-amber-500 text-slate-950 rounded-full flex items-center justify-center font-black text-lg">🎖️</div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 id="session-ano-name" class="font-extrabold text-base">Lt. Official ANO</h3>
+                <span id="session-ano-wing" class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Army Wing</span>
+              </div>
+              <p class="text-xs text-slate-300">Logged in as: <span id="session-ano-user" class="font-mono text-amber-400">@ano_army</span></p>
+            </div>
+          </div>
+          <button onclick="lockAdminSession()" class="bg-red-600/80 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-bold transition">Sign Out 🔒</button>
+        </div>
+
+        <!-- Metrics Bar -->
         <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-indigo-600">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Total Candidates</span>
-            <div id="stat-total" class="text-2xl font-bold text-slate-800">0</div>
+          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-indigo-700 border">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total Candidates</span>
+            <div id="stat-total" class="text-2xl font-black text-slate-900">0</div>
           </div>
-          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-500">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Avg Written Score</span>
-            <div id="stat-written" class="text-2xl font-bold text-blue-600">0 / 30</div>
+          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-600 border">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Avg Written Score</span>
+            <div id="stat-written" class="text-2xl font-black text-blue-700">0 / 30</div>
           </div>
-          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-emerald-500">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Avg Physical Score</span>
-            <div id="stat-physical" class="text-2xl font-bold text-emerald-600">0 / 30</div>
+          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-emerald-600 border">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Avg Physical Score</span>
+            <div id="stat-physical" class="text-2xl font-black text-emerald-700">0 / 30</div>
           </div>
-          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-purple-500">
-            <span class="text-xs font-semibold text-slate-500 uppercase">Avg Interview Score</span>
-            <div id="stat-interview" class="text-2xl font-bold text-purple-600">0 / 40</div>
+          <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-purple-600 border">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Avg Interview Score</span>
+            <div id="stat-interview" class="text-2xl font-black text-purple-700">0 / 40</div>
           </div>
         </div>
 
         <!-- Master Scoreboard Table -->
-        <div class="bg-white rounded-xl shadow-md p-6">
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-slate-200">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b pb-4">
             <div>
-              <h2 class="text-xl font-bold text-indigo-900">Selection Master Scoreboard</h2>
-              <p class="text-xs text-slate-500">Physical (CO/SM/PI Staff) | Written (Auto-fetched) | Interview & Presentation (ANO/PI Staff)</p>
+              <h2 class="text-xl font-black text-indigo-950">Selection Master Scoreboard</h2>
+              <p class="text-xs text-slate-500">Physical (CO/SM/PI Staff) | Written (Auto) | Interview & Presentation (ANO/PI Staff)</p>
             </div>
             <div class="flex space-x-2">
-              <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition">Export Excel/CSV</button>
-              <button onclick="lockDashboard()" class="bg-slate-700 hover:bg-slate-800 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition">Lock Session</button>
+              <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-bold transition">Export CSV/Excel</button>
             </div>
           </div>
 
-          <!-- Table -->
+          <!-- Candidates Table -->
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-sm">
               <thead>
-                <tr class="bg-slate-100 text-slate-700 uppercase text-xs border-b">
+                <tr class="bg-slate-100 text-slate-700 uppercase text-[11px] font-bold tracking-wider border-b">
                   <th class="p-3">Rank</th>
                   <th class="p-3">Candidate Info</th>
                   <th class="p-3 text-center">Physical Fitness<br/><span class="text-[10px] text-slate-500 lowercase">(max 30)</span></th>
@@ -165,20 +198,77 @@
                   <th class="p-3 text-center">Action</th>
                 </tr>
               </thead>
-              <tbody id="ano-table-body" class="divide-y divide-slate-200">
-                <!-- Dynamic Content -->
+              <tbody id="admin-table-body" class="divide-y divide-slate-200">
+                <!-- Live candidate records loaded here -->
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Google Sheet Integration Panel -->
-        <div class="bg-indigo-50 rounded-xl p-5 border border-indigo-200 text-indigo-950 text-xs space-y-2">
-          <h4 class="font-bold text-sm text-indigo-900">🔗 Google Sheet Webhook Link</h4>
-          <p>Paste your Google Apps Script Web App URL below to connect student test submissions to your spreadsheet:</p>
-          <div class="flex gap-2">
-            <input type="url" id="google-sheet-url" class="w-full border rounded p-2 text-xs" placeholder="https://script.google.com/macros/s/.../exec" />
-            <button onclick="saveWebhookUrl()" class="bg-indigo-800 text-white px-4 py-2 rounded hover:bg-indigo-900 font-semibold">Save URL</button>
+        <!-- Security & Multi-ANO Management Panels -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          
+          <!-- 1. Google Sheet Integration Panel -->
+          <div class="bg-indigo-50 rounded-xl p-5 border border-indigo-200 text-indigo-950 text-xs space-y-2">
+            <h4 class="font-bold text-sm text-indigo-950">🔗 Google Sheet Sync</h4>
+            <p class="text-slate-600">Enter your Web App URL to sync candidate submissions:</p>
+            <div class="flex gap-2">
+              <input type="url" id="google-sheet-url" class="w-full border rounded-lg p-2.5 text-xs font-mono" placeholder="https://script.google.com/macros/s/.../exec" />
+              <button onclick="saveWebhookUrl()" class="bg-indigo-900 text-white px-4 py-2.5 rounded-lg hover:bg-indigo-950 font-bold transition">Save</button>
+            </div>
+          </div>
+
+          <!-- 2. Personal Password Change Panel -->
+          <div class="bg-amber-50 rounded-xl p-5 border border-amber-200 text-amber-950 text-xs space-y-2">
+            <h4 class="font-bold text-sm text-amber-950">🔑 Change My Password</h4>
+            <p class="text-slate-600">Update password for active officer profile:</p>
+            <div class="flex gap-2">
+              <div class="relative w-full">
+                <input type="password" id="dash-new-pass" class="w-full border rounded-lg p-2.5 text-xs font-mono" placeholder="Enter new password" />
+                <button type="button" onclick="togglePinVisibility('dash-new-pass')" class="absolute right-2 top-2 text-slate-400 hover:text-slate-600 text-xs">👁️</button>
+              </div>
+              <button onclick="updateCurrentAnoPassword()" class="bg-amber-600 text-slate-950 px-4 py-2.5 rounded-lg hover:bg-amber-700 font-bold transition whitespace-nowrap">Update</button>
+            </div>
+          </div>
+
+          <!-- 3. Add New ANO Account Panel -->
+          <div class="bg-slate-100 rounded-xl p-5 border border-slate-300 text-slate-900 text-xs space-y-3">
+            <h4 class="font-bold text-sm text-indigo-950">➕ Register New ANO Officer</h4>
+            <form onsubmit="addNewAnoAccount(event)" class="space-y-2">
+              <input type="text" id="new-ano-name" required placeholder="Officer Full Name (e.g. Lt. A. K. Singh)" class="w-full border rounded p-2 text-xs" />
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="new-ano-user" required placeholder="Username (e.g. ano_naval)" class="w-full border rounded p-2 text-xs" />
+                <select id="new-ano-wing" class="border rounded p-2 text-xs font-semibold">
+                  <option value="Army Wing">Army Wing</option>
+                  <option value="Navy Wing">Navy Wing</option>
+                  <option value="Air Wing">Air Wing</option>
+                  <option value="Headquarters">Headquarters</option>
+                </select>
+              </div>
+              <input type="password" id="new-ano-pass" required placeholder="Assign Password" class="w-full border rounded p-2 text-xs font-mono" />
+              <button type="submit" class="w-full bg-indigo-900 text-white p-2 rounded font-bold hover:bg-indigo-950 transition">Create ANO Account</button>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- 4. Existing ANO Officers Directory -->
+        <div class="bg-white rounded-xl shadow-md p-5 border border-slate-200">
+          <h4 class="font-bold text-sm text-slate-900 mb-3 flex items-center gap-2">👥 Authorized ANO Officers Directory</h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-slate-100 text-slate-600 uppercase font-bold border-b">
+                  <th class="p-2.5">Officer Name</th>
+                  <th class="p-2.5">Username</th>
+                  <th class="p-2.5">Wing / Unit</th>
+                  <th class="p-2.5 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody id="ano-accounts-table-body" class="divide-y divide-slate-200">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -187,73 +277,371 @@
 
   </main>
 
-  <script>
-    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE IF YOU WANT IT PRE-CONFIGURED
-    const HARDCODED_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXk98Znvgf8WGb19gmFQD1LdgACs6iS2rPvjyzryHz-7uq12X5c0Llq7wHoF3qqjcN/exec"; 
+  <!-- RESET PASSWORD MODAL -->
+  <div id="reset-pin-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full space-y-4 border border-slate-200">
+      <h3 class="text-lg font-black text-slate-900">Reset ANO Password</h3>
+      <p class="text-xs text-slate-500">Provide the officer username and the Master Recovery Key to assign a new password.</p>
+      
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">Target ANO Username *</label>
+        <input type="text" id="recovery-user-input" class="w-full border rounded-lg p-2 text-xs outline-none focus:ring-2 focus:ring-indigo-600" placeholder="e.g. ano_army" />
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">Master Recovery Key *</label>
+        <input type="password" id="recovery-key-input" class="w-full border rounded-lg p-2 text-xs font-mono outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Default Key: RESET2026" />
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-slate-700 mb-1">New Password *</label>
+        <div class="relative">
+          <input type="password" id="modal-new-pin-input" class="w-full border rounded-lg p-2 pr-8 text-xs font-mono outline-none focus:ring-2 focus:ring-indigo-600" placeholder="Enter new password" />
+          <button type="button" onclick="togglePinVisibility('modal-new-pin-input')" class="absolute right-2 top-2 text-slate-400 hover:text-slate-600 text-xs">👁️</button>
+        </div>
+      </div>
 
+      <div class="flex justify-end space-x-2 pt-2">
+        <button type="button" onclick="hideResetModal()" class="px-4 py-2 rounded-lg border text-xs font-bold hover:bg-slate-100 transition">Cancel</button>
+        <button type="button" onclick="executePasswordReset()" class="px-4 py-2 rounded-lg bg-indigo-900 text-white text-xs font-bold hover:bg-indigo-950 transition">Update Password</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const HARDCODED_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzsAeZZdHD0vhoGQV3VBhmwj8To8NKKcE6HPD6TdUI4SqGdyqn2aHmSR52biiAoSuDN/exec"; 
+    const MASTER_RECOVERY_KEY = "RESET2026";
+
+    // Default Pre-Configured Multi-ANO Accounts
+    const DEFAULT_ANO_ACCOUNTS = [
+      { username: "ano_army", name: "Lt. Army Commander", password: "Army123", wing: "Army Wing" },
+      { username: "ano_navy", name: "Sub Lt. Naval Officer", password: "Navy123", wing: "Navy Wing" },
+      { username: "ano_air",  name: "Fg Offr. Air Wing",    password: "Air123",  wing: "Air Wing" },
+      { username: "admin",    name: "Chief Selection Officer", password: "Admin123", wing: "Headquarters" }
+    ];
+
+    // Complex 30 Questions: 10 Current Affairs, 10 Math Aptitude, 10 Logical Reasoning
     const MCQ_QUESTIONS = [
-      { id: 1, q: "What is the official motto of National Cadet Corps (NCC)?", options: ["Service Before Self", "Unity and Discipline", "Duty, Honour, Courage", "Always Fearless"], ans: 1 },
-      { id: 2, q: "In which year was the NCC established in India?", options: ["1947", "1948", "1950", "1952"], ans: 1 },
-      { id: 3, q: "Where is the headquarters of DG NCC located?", options: ["Mumbai", "Dehradun", "New Delhi", "Lucknow"], ans: 2 },
-      { id: 4, q: "Who conducts the Physical Fitness Assessment in the selection process?", options: ["ANO only", "Commanding Officer (CO), Subedar Major (SM), and PI Staff", "Class Teacher", "Principal"], ans: 1 },
-      { id: 5, q: "What is the full form of ANO in NCC?", options: ["Assistant NCC Officer", "Associate NCC Officer", "Army National Officer", "Area NCC Officer"], ans: 1 },
-      { id: 6, q: "How many total marks does the Written Test carry?", options: ["20 Marks", "30 Marks", "50 Marks", "100 Marks"], ans: 1 },
-      { id: 7, q: "What is the presentation duration in Stage 3?", options: ["2 minutes", "5 minutes", "10 minutes", "15 minutes"], ans: 1 },
-      { id: 8, q: "Where is Stage 3 (Interview and Presentation) conducted?", options: ["Ground", "NCC Class Room", "NCC Officer Room", "Principal Office"], ans: 2 },
-      { id: 9, q: "In drill position 'Savdhan', what is the angle formed between the feet?", options: ["15 Degrees", "30 Degrees", "45 Degrees", "60 Degrees"], ans: 1 },
-      { id: 10, q: "Which of the following is the highest rank for Senior Division Cadets?", options: ["Junior Under Officer", "Senior Under Officer (SUO)", "Company Quarter Master", "Cadet Sergeant"], ans: 1 },
-      { id: 11, q: "What is the length of a normal pace in quick march?", options: ["20 inches", "30 inches", "45 inches", "12 inches"], ans: 1 },
-      { id: 12, q: "How many steps per minute are taken in Tez Chal (Quick March)?", options: ["110 steps", "120 steps", "135 steps", "140 steps"], ans: 1 },
-      { id: 13, q: "What is the full form of PI Staff in NCC?", options: ["Primary Instructor", "Permanent Instructor", "Physical Instructor", "Patrol Inspector"], ans: 1 },
-      { id: 14, q: "What is a key rule during NCC drill?", options: ["No movement of eyes or body", "Talking allowed quietly", "Looking around", "Relaxing shoulders"], ans: 0 },
-      { id: 15, q: "What is the caliber of the standard .22 Rifle used in NCC target firing?", options: ["0.22 inches", "0.30 inches", "7.62 mm", "5.56 mm"], ans: 0 },
-      { id: 16, q: "In .22 Deluxe Rifle, what is the capacity of the magazine?", options: ["5 Rounds", "10 Rounds", "20 Rounds", "Single shot only"], ans: 0 },
-      { id: 17, q: "What is the effective range of the .22 Deluxe Rifle?", options: ["25 yards", "50 yards", "100 yards", "200 yards"], ans: 0 },
-      { id: 18, q: "Who is the Supreme Commander of the Indian Armed Forces?", options: ["Prime Minister", "Defense Minister", "President of India", "Chief of Defence Staff"], ans: 2 },
-      { id: 19, q: "What are the three colors present in the NCC Flag?", options: ["Red, Dark Blue, Light Blue", "Red, Yellow, Green", "Saffron, White, Green", "Navy Blue, Red, Gold"], ans: 0 },
-      { id: 20, q: "What does Light Blue color represent in the NCC flag?", options: ["Army", "Navy", "Air Force", "Coast Guard"], ans: 2 },
-      { id: 21, q: "What does Red color in the NCC flag represent?", options: ["Army", "Navy", "Air Force", "Police"], ans: 0 },
-      { id: 22, q: "What does Dark Blue color in the NCC flag represent?", options: ["Army", "Navy", "Air Force", "Border Security"], ans: 1 },
-      { id: 23, q: "Where is the Indian Military Academy (IMA) situated?", options: ["Pune", "Dehradun", "Chennai", "Gwalior"], ans: 1 },
-      { id: 24, q: "The National Defence Academy (NDA) is located at:", options: ["Khadakwasla, Pune", "Wellington", "Hyderabad", "Mhow"], ans: 0 },
-      { id: 25, q: "Find the missing number in the sequence: 2, 6, 12, 20, 30, ?", options: ["36", "40", "42", "48"], ans: 2 },
-      { id: 26, q: "If A = 1, CAT = 24, then DOG = ?", options: ["24", "26", "28", "30"], ans: 1 },
-      { id: 27, q: "What format is used for evaluating candidates in Stage 2 Written Test?", options: ["Multiple Choice Questions (MCQ)", "Essay Writing", "Drawing Test", "Oral Quiz"], ans: 0 },
-      { id: 28, q: "Who conducts Stage 3 (Interview and Presentation)?", options: ["ANO and College PI Staff", "Students Union", "Sports Officer", "Commanding Officer alone"], ans: 0 },
-      { id: 29, q: "What does CO stand for in the physical assessment board?", options: ["Chief Officer", "Commanding Officer", "Central Officer", "Cadet Officer"], ans: 1 },
-      { id: 30, q: "What is the primary purpose of the Written Test in NCC Selection?", options: ["To assess general knowledge and aptitude", "To check running speed", "To test voice loudness", "To check physical height"], ans: 0 }
+      // --- SECTION 1: CURRENT AFFAIRS (Q1 - Q10) ---
+      {
+        id: 1,
+        section: "Current Affairs",
+        q: "Consider the following statements regarding the AUKUS security partnership:\n1. Pillar I focuses exclusively on delivering conventionally armed, nuclear-powered submarines to Australia.\n2. Pillar II emphasizes advanced capabilities including quantum technologies, AI, hypersonic countermeasures, and cyber warfare.\n3. Under AUKUS, Australia will acquire nuclear enrichment capabilities to produce naval reactor fuel domestically.\n\nWhich of the statements given above is/are correct?",
+        options: ["1 and 2 only", "2 and 3 only", "1 and 3 only", "1, 2, and 3"],
+        ans: 0
+      },
+      {
+        id: 2,
+        section: "Current Affairs",
+        q: "With reference to the Carbon Border Adjustment Mechanism (CBAM) introduced by the European Union, consider the following statements:\n1. It applies an equalized carbon price on imported goods to prevent 'carbon leakage'.\n2. The initial phase targets carbon-intensive sectors including cement, iron/steel, aluminum, fertilizers, electricity, and hydrogen.\n3. Exporting nations with established domestic carbon pricing mechanisms equivalent to the EU ETS are granted explicit price deductions.\n\nWhich of the statements given above are correct?",
+        options: ["1 and 2 only", "2 and 3 only", "1 and 3 only", "1, 2, and 3"],
+        ans: 3
+      },
+      {
+        id: 3,
+        section: "Current Affairs",
+        q: "The Project mBridge platform, led by the Bank for International Settlements (BIS) Innovation Hub alongside central banks, primarily aims to achieve which objective?",
+        options: [
+          "Standardizing international sovereign credit rating systems",
+          "Facilitating real-time, multi-currency cross-border payments using Central Bank Digital Currencies (CBDCs)",
+          "Regulating decentralized finance (DeFi) liquidity pools across G20 nations",
+          "Replacing SWIFT with a unified fiat-backed stablecoin infrastructure"
+        ],
+        ans: 1
+      },
+      {
+        id: 4,
+        section: "Current Affairs",
+        q: "With respect to Indian defense architecture and strategic programs, consider the following pairs:\n1. Project Kusha: Long-range indigenous Surface-to-Air Missile (SAM) defense system\n2. Project Seabird: Development of India's largest naval base at Karwar\n3. Project Akashteer: Automated air defense control and reporting system for the Army\n\nWhich of the pairs given above is/are correctly matched?",
+        options: ["1 and 2 only", "2 and 3 only", "1 and 3 only", "1, 2, and 3"],
+        ans: 3
+      },
+      {
+        id: 5,
+        section: "Current Affairs",
+        q: "Which international treaty, formally adopted under UNCLOS, establishes a legal framework for conserving marine biodiversity in areas beyond national jurisdiction (ABNJ)?",
+        options: [
+          "The Montreal Protocol Amendment",
+          "The High Seas Treaty (BBNJ Agreement)",
+          "The Kunming-Montreal Global Biodiversity Framework",
+          "The Nairobi Convention on Marine Pollution"
+        ],
+        ans: 1
+      },
+      {
+        id: 6,
+        section: "Current Affairs",
+        q: "Consider the following statements regarding Hypersonic Glide Vehicles (HGVs) compared to traditional Intercontinental Ballistic Missiles (ICBMs):\n1. Unlike ICBMs which follow a predictable parabolic trajectory, HGVs re-enter the atmosphere at lower altitudes and maneuver unpredictably.\n2. HGVs travel at speeds exceeding Mach 20 throughout their atmospheric flight, whereas ICBM re-entry vehicles travel strictly at subsonic speeds.\n3. HGVs cannot be tracked by space-based infrared sensors during their atmospheric glide phase.\n\nWhich of the statements given above is/are correct?",
+        options: ["1 only", "1 and 2 only", "2 and 3 only", "1 and 3 only"],
+        ans: 0
+      },
+      {
+        id: 7,
+        section: "Current Affairs",
+        q: "The India-Middle East-Europe Economic Corridor (IMEC) framework includes two main corridors. Which of the following correctly describes their routing?",
+        options: [
+          "The East Corridor connects India to the Arabian Gulf; the Northern Corridor connects the Arabian Gulf to Europe.",
+          "The West Corridor connects India to the Red Sea; the Southern Corridor connects the Levant to Central Europe.",
+          "The Maritime Corridor connects Mumbai to Vladivostok; the Overland Corridor connects Eurasia to the Mediterranean.",
+          "The Direct Corridor connects Gujarat to Oman; the Transit Corridor connects Iraq to Turkey."
+        ],
+        ans: 0
+      },
+      {
+        id: 8,
+        section: "Current Affairs",
+        q: "Regarding international AI governance and multilateral agreements, the term 'Bletchley Declaration' specifically refers to:",
+        options: [
+          "A global treaty banning the development of autonomous lethal weapon systems (LAWS).",
+          "The world's first multi-nation agreement affirming the need for cooperative risk management regarding frontier AI models.",
+          "An executive mandate setting binding cross-border tariffs on AI hardware exports.",
+          "A binding framework established by the ITU to control data transfer protocols."
+        ],
+        ans: 1
+      },
+      {
+        id: 9,
+        section: "Current Affairs",
+        q: "In international finance, what distinguishes Special Drawing Rights (SDRs) maintained by the International Monetary Fund (IMF)?\n1. SDRs represent a direct currency held by commercial banks worldwide.\n2. The SDR value is determined by a basket of five major currencies: USD, EUR, RMB, JPY, GBP.\n3. Member countries can exchange SDRs for freely usable currencies among IMF participants.\n\nWhich of the statements given above are correct?",
+        options: ["1 and 2 only", "2 and 3 only", "1 and 3 only", "1, 2, and 3"],
+        ans: 1
+      },
+      {
+        id: 10,
+        section: "Current Affairs",
+        q: "With reference to Directed Energy Weapons (DEWs) such as high-power lasers and high-power microwaves:\n1. They operate at the speed of light, offering minimal time-of-flight delay.\n2. Atmospheric attenuation (dust, rain, fog) does not affect the energy density delivered by laser-based DEWs.\n3. They offer a virtually unlimited magazine capacity, limited primarily by electrical power availability.\n\nWhich of the statements given above are correct?",
+        options: ["1 and 2 only", "2 and 3 only", "1 and 3 only", "1, 2, and 3"],
+        ans: 2
+      },
+
+      // --- SECTION 2: MATHEMATICAL APTITUDE (Q11 - Q20) ---
+      {
+        id: 11,
+        section: "Mathematical Aptitude",
+        q: "Two trains, T1 and T2, start simultaneously towards each other from stations A and B (720 km apart). T1 starts from A at a constant speed of 60 km/h. T2 starts from B with an initial speed of 40 km/h for the first hour, and increases its speed by 10 km/h at the end of every subsequent hour. How far from station A will the two trains cross each other?",
+        options: ["360 km", "420 km", "450 km", "480 km"],
+        ans: 0
+      },
+      {
+        id: 12,
+        section: "Mathematical Aptitude",
+        q: "Three workers A, B, and C can complete a project independently in 20, 30, and 60 days, respectively. They work in a rotating schedule: A works alone on Day 1, B works alone on Day 2, and C works alone on Day 3. However, every time C finishes his day of work, the overall efficiency of all three workers drops by 10% relative to their original baseline efficiency. In how many days will the project be completed?",
+        options: ["28.42 days", "32.15 days", "34.62 days", "38.89 days"],
+        ans: 3
+      },
+      {
+        id: 13,
+        section: "Mathematical Aptitude",
+        q: "Container X contains a mixture of milk and water in the ratio 7:3. Container Y contains milk and water in the ratio 3:5. If 40% of the liquid from X and 60% of the liquid from Y are mixed in a third container Z, the ratio of milk to water in container Z becomes 1:1. What was the ratio of the total initial volumes of liquid in Container X to Container Y?",
+        options: ["5:4", "15:8", "25:14", "35:16"],
+        ans: 1
+      },
+      {
+        id: 14,
+        section: "Mathematical Aptitude",
+        q: "A sum of $20,000 is invested at a compound interest rate of 12% per annum, compounded quarterly for the first year, and at 10% per annum, compounded half-yearly for the second year. If an additional deposit of $5,000 is added to the principal at the end of Year 1 before calculating interest for Year 2, what is the total compound interest earned over the 2-year period?",
+        options: ["$5,842.25", "$5,214.50", "$5,681.35", "$6,120.80"],
+        ans: 0
+      },
+      {
+        id: 15,
+        section: "Mathematical Aptitude",
+        q: "The probability that person P1 hits a target is 2/3, person P2 hits it is 3/4, and person P3 hits it is 4/5. All three fire simultaneously at a single target. Given that EXACTLY TWO shots hit the target, what is the conditional probability that P1 was one of the two who hit it?",
+        options: ["10/13", "18/29", "20/29", "24/31"],
+        ans: 2
+      },
+      {
+        id: 16,
+        section: "Mathematical Aptitude",
+        q: "Find the sum of the infinite series:\nS = 1 + 3/4 + 6/16 + 10/64 + 15/256 + ...",
+        options: ["16/9", "32/27", "64/27", "27/16"],
+        ans: 2
+      },
+      {
+        id: 17,
+        section: "Mathematical Aptitude",
+        q: "A solid right circular cone of radius R = 12 cm and height H = 24 cm is cut into two parts by a plane parallel to its base at a distance of 8 cm from the apex. A sphere is then maximally inscribed inside the lower frustum touching both parallel faces. What is the volume of the remaining space inside the frustum outside the sphere?",
+        options: ["2176π/3 cm³", "2560π/3 cm³", "896π cm³", "1792π/3 cm³"],
+        ans: 1
+      },
+      {
+        id: 18,
+        section: "Mathematical Aptitude",
+        q: "A dishonest trader marks his goods 40% above the cost price and gives a discount of 20% to cash buyers. He uses a faulty balance that reads 1000g for every 800g actually weighed. Additionally, 10% of his inventory spoils during transit and is discarded. What is his net percentage profit or loss?",
+        options: ["26% profit", "21.5% profit", "18.8% profit", "15.2% profit"],
+        ans: 0
+      },
+      {
+        id: 19,
+        section: "Mathematical Aptitude",
+        q: "Pipes A and B can fill a tank in 12 hours and 16 hours respectively, while Pipe C can empty the full tank in 24 hours. All three pipes are opened at 6:00 AM. Pipe A is closed at 9:00 AM, Pipe B is closed at 11:00 AM, and Pipe C operates continuously throughout. At what exact time will the tank be completely empty or full?",
+        options: ["2:30 PM (Full)", "4:12 PM (Full)", "3:48 PM (Full)", "5:20 PM (Full)"],
+        ans: 2
+      },
+      {
+        id: 20,
+        section: "Mathematical Aptitude",
+        q: "Out of 120 military officers, 65 speak French, 45 speak German, and 42 speak Spanish. 20 speak both French and German, 25 speak both French and Spanish, and 15 speak both German and Spanish. If 8 officers speak all three languages, how many officers speak NONE of these three languages?",
+        options: ["15", "20", "22", "18"],
+        ans: 3
+      },
+
+      // --- SECTION 3: LOGICAL REASONING (Q21 - Q30) ---
+      {
+        id: 21,
+        section: "Logical Reasoning",
+        q: "Seven officers (A, B, C, D, E, F, G) sit around a circular table facing center or outward. A sits 3rd left of F (opposite facing directions). C sits 2nd right of A. E sits immediate left of C (both face center). D is not immediate neighbor of A. B sits 2nd left of D. Immediate neighbors of G face opposite directions. F sits 2nd right of B. Who sits 3rd to the right of G?",
+        options: ["B", "D", "E", "A"],
+        ans: 1
+      },
+      {
+        id: 22,
+        section: "Logical Reasoning",
+        q: "Eight boxes (1 to 8) are stacked vertically. Box 5 is kept at an even position from the top. Three boxes are kept between Box 5 and Box 2. Box 8 is kept immediately above Box 3 and immediately below Box 1. As many boxes are kept above Box 1 as below Box 7. Box 6 is kept above Box 4, but below Box 2. Which box is placed at the 4th position from the bottom?",
+        options: ["Box 8", "Box 3", "Box 1", "Box 6"],
+        ans: 0
+      },
+      {
+        id: 23,
+        section: "Logical Reasoning",
+        q: "Statements:\n1. Only a few Missiles are Drones.\n2. All Drones are Radar Systems.\n3. No Radar System is a Decoy.\n4. Some Decoys are Shields.\n\nConclusions:\nI. Some Missiles are definitely not Radar Systems.\nII. All Drones can never be Decoys.\nIII. At least some Shields being Radar Systems is a possibility.\n\nWhich conclusions logically follow?",
+        options: [
+          "Only Conclusion I follows",
+          "Only Conclusions II and III follow",
+          "Only Conclusion II follows",
+          "All Conclusions I, II, and III follow"
+        ],
+        ans: 1
+      },
+      {
+        id: 24,
+        section: "Logical Reasoning",
+        q: "A word/number arrangement machine transforms input lines step-by-step:\nInput: radar 84 operational 19 shield 62 tactical 37\nStep IV: tactical 84 62 37 19 operational radar shield\n\nFollowing the exact logic, determine Step III for:\nInput: barracks 91 armor 28 stealth 53 garrison 46",
+        options: [
+          "53 46 28 stealth garrison 91 armor barracks",
+          "91 53 46 stealth garrison 28 armor barracks",
+          "46 28 91 stealth barracks armor 53 garrison",
+          "91 53 46 barracks garrison 28 armor stealth"
+        ],
+        ans: 1
+      },
+      {
+        id: 25,
+        section: "Logical Reasoning",
+        q: "Defense Analysts assert: 'Integrating autonomous AI target recognition into naval defense batteries will drastically reduce response latency against multi-vector hypersonic anti-ship missile strikes compared to human-in-the-loop systems.' Which option most strongly STRENGTHENS this assertion?",
+        options: [
+          "Human radar operators exhibit significant cognitive slowdown when processing tracking data from more than two incoming vector threats simultaneously.",
+          "Autonomous AI systems require frequent recalibration when exposed to dense electronic countermeasure environments.",
+          "Modern surface warships possess automated physical interceptors capable of firing up to 4,500 rounds per minute.",
+          "The operational deployment cost of maintaining fully autonomous combat systems exceeds that of conventional crewed weapon stations."
+        ],
+        ans: 0
+      },
+      {
+        id: 26,
+        section: "Logical Reasoning",
+        q: "Observation: A border security forces division introduced lighter, high-tech tactical body armor to replace heavy steel-plate vests. Despite offering identical ballistic penetration resistance in trials, casualty rates from fragment injuries among front-line patrols INCREASED by 18% during the first six months. Which option best explains the paradox?",
+        options: [
+          "Soldiers equipped with the lighter armor were assigned to terrain with significantly higher ambient operational temperatures.",
+          "The lighter weight allowed soldiers to maneuver faster, leading patrol commanders to increase the frequency of high-risk operational sorties into hostile sectors.",
+          "The manufacturer of the high-tech armor experienced supply chain delays in delivering spare component parts.",
+          "Neighboring defense sectors continued utilizing legacy heavy steel-plate vests throughout the same timeframe."
+        ],
+        ans: 1
+      },
+      {
+        id: 27,
+        section: "Logical Reasoning",
+        q: "Data Sufficiency Question: Is Officer X standing to the North-East of Officer Y?\nStatement 1: Officer X is 10 m North of Officer Z, who is 10 m East of Officer W.\nStatement 2: Officer Y is 10 m South of Officer W.",
+        options: [
+          "Statement 1 alone is sufficient to answer the question",
+          "Statement 2 alone is sufficient to answer the question",
+          "Both Statements 1 and 2 together are necessary to answer the question",
+          "Neither Statement 1 nor Statement 2 is sufficient to answer the question"
+        ],
+        ans: 2
+      },
+      {
+        id: 28,
+        section: "Logical Reasoning",
+        q: "A surveillance drone launches from Point P and flies 12 km North to Point Q. It then turns 135° clockwise and flies 8√2 km to Point R. From Point R, it turns 90° counter-clockwise and flies 10 km to Point S. In which direction is Point S relative to initial launch Point P?",
+        options: ["North-East", "South-East", "North-West", "Directly East"],
+        ans: 0
+      },
+      {
+        id: 29,
+        section: "Logical Reasoning",
+        q: "In a coded mathematical framework: Δ (≥), ★ (>), # (=), @ (≤), Ω (<).\nGiven Statements: M ★ N, N Δ R, R # K, K @ L.\nWhich of the following conclusions is definitely true?",
+        options: ["M ★ R", "L Δ N", "M Ω K", "N # L"],
+        ans: 0
+      },
+      {
+        id: 30,
+        section: "Logical Reasoning",
+        q: "In a military intelligence family of six members (A, B, C, D, E, F) with two married couples: C is paternal grandmother of F and sits at an extreme end facing North. B (intelligence officer) is son-in-law of C. D sits 3rd right of C. E (mother of F) sits immediate left of her husband. A is father of E and sits 2nd left of D. Who sits immediate right of B?",
+        options: ["C", "E", "F", "A"],
+        ans: 1
+      }
     ];
 
     let candidatesData = JSON.parse(localStorage.getItem('ncc_candidates') || '[]');
     let currentStudent = null;
     let timerInterval = null;
+    let currentAnoSession = null;
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedUrl = localStorage.getItem('ncc_sheet_url') || HARDCODED_SCRIPT_URL;
       document.getElementById('google-sheet-url').value = savedUrl;
+      initAnoAccounts();
       renderQuestions();
     });
 
-    function switchTab(tab) {
-      if (tab === 'student') {
-        document.getElementById('tab-student-view').classList.remove('hidden');
-        document.getElementById('tab-ano-view').classList.add('hidden');
+    // Helper functions for Multi-ANO account storage
+    function getAnoAccounts() {
+      return JSON.parse(localStorage.getItem('ncc_ano_accounts')) || DEFAULT_ANO_ACCOUNTS;
+    }
+
+    function saveAnoAccounts(accounts) {
+      localStorage.setItem('ncc_ano_accounts', JSON.stringify(accounts));
+    }
+
+    function initAnoAccounts() {
+      if (!localStorage.getItem('ncc_ano_accounts')) {
+        saveAnoAccounts(DEFAULT_ANO_ACCOUNTS);
+      }
+    }
+
+    function togglePinVisibility(inputId) {
+      const field = document.getElementById(inputId);
+      if (field) {
+        field.type = field.type === "password" ? "text" : "password";
+      }
+    }
+
+    function switchPortal(portal) {
+      if (portal === 'student') {
+        document.getElementById('portal-student').classList.remove('hidden');
+        document.getElementById('portal-admin').classList.add('hidden');
       } else {
-        document.getElementById('tab-student-view').classList.add('hidden');
-        document.getElementById('tab-ano-view').classList.remove('hidden');
+        document.getElementById('portal-student').classList.add('hidden');
+        document.getElementById('portal-admin').classList.remove('hidden');
       }
     }
 
     function renderQuestions() {
       const container = document.getElementById('questions-list');
       container.innerHTML = MCQ_QUESTIONS.map((item, index) => `
-        <div class="p-4 border rounded-lg bg-slate-50 space-y-3">
-          <p class="font-semibold text-slate-800"><span class="text-indigo-800 font-bold">Q${index + 1}.</span> ${item.q}</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+        <div class="p-4 border rounded-xl bg-slate-50 space-y-3">
+          <div class="flex justify-between items-center">
+            <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 bg-indigo-100 text-indigo-900 rounded-full tracking-wider">
+              ${item.section}
+            </span>
+            <span class="text-xs font-bold text-slate-400">1 Mark</span>
+          </div>
+          <p class="font-bold text-slate-900 text-sm whitespace-pre-line"><span class="text-indigo-900 font-extrabold mr-1">Q${index + 1}.</span> ${item.q}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
             ${item.options.map((opt, optIdx) => `
-              <label class="flex items-center space-x-2 bg-white p-2.5 rounded border hover:bg-indigo-50 cursor-pointer transition">
-                <input type="radio" name="q_${item.id}" value="${optIdx}" required class="text-indigo-600 focus:ring-indigo-500">
-                <span>${opt}</span>
+              <label class="flex items-center space-x-2 bg-white p-3 rounded-lg border hover:bg-indigo-50/80 cursor-pointer transition">
+                <input type="radio" name="q_${item.id}" value="${optIdx}" required class="text-indigo-700 focus:ring-indigo-600">
+                <span class="font-medium text-slate-700">${opt}</span>
               </label>
             `).join('')}
           </div>
@@ -261,7 +649,7 @@
       `).join('');
     }
 
-    function startTest(e) {
+    function startAssessment(e) {
       e.preventDefault();
       currentStudent = {
         id: 'CAD-' + Date.now().toString().slice(-5),
@@ -275,7 +663,7 @@
         status: 'Pending'
       };
 
-      document.getElementById('student-reg-card').classList.add('hidden');
+      document.getElementById('student-login-card').classList.add('hidden');
       document.getElementById('test-container').classList.remove('hidden');
       document.getElementById('candidate-heading').innerText = `Candidate: ${currentStudent.name} (${currentStudent.roll})`;
 
@@ -318,92 +706,230 @@
       document.getElementById('success-card').classList.remove('hidden');
     }
 
-    function resetTestForm() {
-      document.getElementById('student-reg-form').reset();
+    function resetAssessment() {
+      document.getElementById('student-login-form').reset();
       document.getElementById('mcq-form').reset();
       document.getElementById('success-card').classList.add('hidden');
-      document.getElementById('student-reg-card').classList.remove('hidden');
+      document.getElementById('student-login-card').classList.remove('hidden');
     }
 
-    function authenticateANO() {
-      const pin = document.getElementById('ano-pin').value;
-      if (pin === 'ANO123') {
-        document.getElementById('ano-login-card').classList.add('hidden');
-        document.getElementById('ano-dashboard-content').classList.remove('hidden');
-        renderANODashboard();
+    // MULTI-ANO AUTHENTICATION LOGIC
+    function authenticateAno(e) {
+      e.preventDefault();
+      const user = document.getElementById('ano-username').value.trim().toLowerCase();
+      const pass = document.getElementById('ano-password').value;
+
+      const accounts = getAnoAccounts();
+      const matchedOfficer = accounts.find(a => a.username.toLowerCase() === user && a.password === pass);
+
+      if (matchedOfficer) {
+        currentAnoSession = matchedOfficer;
+        document.getElementById('admin-login-card').classList.add('hidden');
+        document.getElementById('admin-dashboard-content').classList.remove('hidden');
+        document.getElementById('admin-login-error').classList.add('hidden');
+
+        // Update Session Header
+        document.getElementById('session-ano-name').innerText = matchedOfficer.name;
+        document.getElementById('session-ano-wing').innerText = matchedOfficer.wing;
+        document.getElementById('session-ano-user').innerText = '@' + matchedOfficer.username;
+
+        renderAdminDashboard();
+        renderAnoDirectoryTable();
       } else {
-        document.getElementById('login-error').classList.remove('hidden');
+        document.getElementById('admin-login-error').classList.remove('hidden');
       }
     }
 
-    function lockDashboard() {
-      document.getElementById('ano-pin').value = '';
-      document.getElementById('ano-login-card').classList.remove('hidden');
-      document.getElementById('ano-dashboard-content').classList.add('hidden');
+    function lockAdminSession() {
+      currentAnoSession = null;
+      document.getElementById('ano-username').value = '';
+      document.getElementById('ano-password').value = '';
+      document.getElementById('admin-login-card').classList.remove('hidden');
+      document.getElementById('admin-dashboard-content').classList.add('hidden');
     }
 
-    function renderANODashboard() {
-      candidatesData = JSON.parse(localStorage.getItem('ncc_candidates') || '[]');
+    function showDefaultCredentialsAlert() {
+      alert("Pre-configured Officers Logins:\n\n1. Username: ano_army  | Password: Army123\n2. Username: ano_navy  | Password: Navy123\n3. Username: ano_air   | Password: Air123\n4. Username: admin      | Password: Admin123");
+    }
+
+    function updateCurrentAnoPassword() {
+      if (!currentAnoSession) return;
+      const newPass = document.getElementById('dash-new-pass').value.trim();
+      if (!newPass) return alert("Please enter a valid password.");
+
+      let accounts = getAnoAccounts();
+      let target = accounts.find(a => a.username === currentAnoSession.username);
+      if (target) {
+        target.password = newPass;
+        saveAnoAccounts(accounts);
+        document.getElementById('dash-new-pass').value = '';
+        alert(`Password for @${target.username} updated successfully!`);
+      }
+    }
+
+    function addNewAnoAccount(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-ano-name').value.trim();
+      const user = document.getElementById('new-ano-user').value.trim().toLowerCase();
+      const wing = document.getElementById('new-ano-wing').value;
+      const pass = document.getElementById('new-ano-pass').value.trim();
+
+      let accounts = getAnoAccounts();
+      if (accounts.some(a => a.username.toLowerCase() === user)) {
+        return alert("An officer with this username already exists!");
+      }
+
+      accounts.push({ name, username: user, wing, password: pass });
+      saveAnoAccounts(accounts);
+      alert(`New Officer Account created for ${name} (@${user})`);
+      
+      e.target.reset();
+      renderAnoDirectoryTable();
+    }
+
+    function deleteAnoAccount(username) {
+      if (currentAnoSession && currentAnoSession.username === username) {
+        return alert("You cannot delete the account you are currently logged in with!");
+      }
+      if (confirm(`Remove ANO Officer account @${username}?`)) {
+        let accounts = getAnoAccounts().filter(a => a.username !== username);
+        saveAnoAccounts(accounts);
+        renderAnoDirectoryTable();
+      }
+    }
+
+    function renderAnoDirectoryTable() {
+      const tbody = document.getElementById('ano-accounts-table-body');
+      const accounts = getAnoAccounts();
+      tbody.innerHTML = '';
+
+      accounts.forEach(a => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50">
+            <td class="p-2.5 font-bold text-slate-800">${a.name}</td>
+            <td class="p-2.5 font-mono text-indigo-900">@${a.username}</td>
+            <td class="p-2.5 font-semibold text-slate-600">${a.wing}</td>
+            <td class="p-2.5 text-center">
+              <button onclick="deleteAnoAccount('${a.username}')" class="text-red-600 hover:underline font-bold">Remove</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function showResetModal() {
+      document.getElementById('reset-pin-modal').classList.remove('hidden');
+    }
+
+    function hideResetModal() {
+      document.getElementById('recovery-user-input').value = "";
+      document.getElementById('recovery-key-input').value = "";
+      document.getElementById('modal-new-pin-input').value = "";
+      document.getElementById('reset-pin-modal').classList.add('hidden');
+    }
+
+    function executePasswordReset() {
+      const username = document.getElementById('recovery-user-input').value.trim().toLowerCase();
+      const recKey = document.getElementById('recovery-key-input').value.trim();
+      const newPass = document.getElementById('modal-new-pin-input').value.trim();
+
+      if (recKey !== MASTER_RECOVERY_KEY) {
+        return alert("Invalid Master Recovery Key!");
+      }
+      if (!newPass || !username) {
+        return alert("Please enter both the target username and new password.");
+      }
+
+      let accounts = getAnoAccounts();
+      let target = accounts.find(a => a.username.toLowerCase() === username);
+
+      if (!target) {
+        return alert(`No ANO account found matching username '@${username}'`);
+      }
+
+      target.password = newPass;
+      saveAnoAccounts(accounts);
+      alert(`Password for officer @${username} reset successfully!`);
+      hideResetModal();
+    }
+
+    function renderAdminDashboard() {
+      const sheetUrl = localStorage.getItem('ncc_sheet_url') || HARDCODED_SCRIPT_URL;
+      const tbody = document.getElementById('admin-table-body');
+
+      if (sheetUrl) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-indigo-700 font-bold">Fetching live candidate records from Google Sheet...</td></tr>`;
+        fetch(sheetUrl)
+          .then(res => res.json())
+          .then(data => {
+            candidatesData = data;
+            populateTable();
+          })
+          .catch(() => populateTable());
+      } else {
+        populateTable();
+      }
+    }
+
+    function populateTable() {
+      const tbody = document.getElementById('admin-table-body');
       
       candidatesData.forEach(c => {
         c.totalScore = (parseFloat(c.physicalScore) || 0) + (parseFloat(c.writtenScore) || 0) + (parseFloat(c.interviewScore) || 0);
       });
 
       candidatesData.sort((a, b) => b.totalScore - a.totalScore);
-
-      const tbody = document.getElementById('ano-table-body');
       tbody.innerHTML = '';
 
       if (candidatesData.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400">No candidates have taken the test on this browser yet. Check your Google Sheet for all incoming responses!</td></tr>`;
-      } else {
-        candidatesData.forEach((c, idx) => {
-          tbody.innerHTML += `
-            <tr class="hover:bg-slate-50 transition">
-              <td class="p-3 font-bold text-slate-700">#${idx + 1}</td>
-              <td class="p-3">
-                <div class="font-bold text-indigo-900">${c.name}</div>
-                <div class="text-xs text-slate-500">${c.roll} | ${c.dept}</div>
-                <div class="text-[10px] text-slate-400">Phone: ${c.phone}</div>
-              </td>
-              <td class="p-3 text-center">
-                <input type="number" min="0" max="30" value="${c.physicalScore}" onchange="updateScore('${c.id}', 'physicalScore', this.value)" class="w-16 border rounded text-center py-1 text-sm font-semibold focus:ring-2 focus:ring-indigo-500" />
-              </td>
-              <td class="p-3 text-center font-bold text-blue-700 bg-blue-50/60 rounded">
-                ${c.writtenScore} / 30
-              </td>
-              <td class="p-3 text-center">
-                <input type="number" min="0" max="40" value="${c.interviewScore}" onchange="updateScore('${c.id}', 'interviewScore', this.value)" class="w-16 border rounded text-center py-1 text-sm font-semibold focus:ring-2 focus:ring-indigo-500" />
-              </td>
-              <td class="p-3 text-center font-extrabold text-indigo-900 text-base">
-                ${c.totalScore} / 100
-              </td>
-              <td class="p-3 text-center">
-                <select onchange="updateStatus('${c.id}', this.value)" class="text-xs border rounded p-1 font-semibold ${c.status==='Selected'?'text-green-700 bg-green-50':c.status==='Waitlisted'?'text-amber-700 bg-amber-50':'text-slate-700'}">
-                  <option value="Pending" ${c.status==='Pending'?'selected':''}>Pending</option>
-                  <option value="Selected" ${c.status==='Selected'?'selected':''}>Selected ✅</option>
-                  <option value="Waitlisted" ${c.status==='Waitlisted'?'selected':''}>Waitlisted ⏳</option>
-                  <option value="Rejected" ${c.status==='Rejected'?'selected':''}>Not Qualified</option>
-                </select>
-              </td>
-              <td class="p-3 text-center">
-                <button onclick="deleteCandidate('${c.id}')" class="text-red-500 hover:text-red-700 text-xs font-semibold">Delete</button>
-              </td>
-            </tr>
-          `;
-        });
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400 font-semibold">No candidate records found yet.</td></tr>`;
+        return;
       }
 
+      candidatesData.forEach((c, idx) => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="p-3 font-black text-slate-800">#${idx + 1}</td>
+            <td class="p-3">
+              <div class="font-bold text-indigo-950">${c.name}</div>
+              <div class="text-xs text-slate-500">${c.roll} | ${c.dept}</div>
+              <div class="text-[10px] text-slate-400">Mobile: ${c.phone}</div>
+            </td>
+            <td class="p-3 text-center">
+              <input type="number" min="0" max="30" value="${c.physicalScore}" onchange="updateScore('${c.id}', 'physicalScore', this.value)" class="w-16 border rounded-lg text-center py-1 text-sm font-bold focus:ring-2 focus:ring-indigo-600 outline-none" />
+            </td>
+            <td class="p-3 text-center font-extrabold text-blue-700 bg-blue-50/80 rounded-lg">
+              ${c.writtenScore} / 30
+            </td>
+            <td class="p-3 text-center">
+              <input type="number" min="0" max="40" value="${c.interviewScore}" onchange="updateScore('${c.id}', 'interviewScore', this.value)" class="w-16 border rounded-lg text-center py-1 text-sm font-bold focus:ring-2 focus:ring-indigo-600 outline-none" />
+            </td>
+            <td class="p-3 text-center font-black text-indigo-950 text-base">
+              ${c.totalScore} / 100
+            </td>
+            <td class="p-3 text-center">
+              <select onchange="updateStatus('${c.id}', this.value)" class="text-xs border rounded-lg p-1.5 font-bold ${c.status==='Selected'?'text-green-700 bg-green-50':c.status==='Waitlisted'?'text-amber-700 bg-amber-50':'text-slate-700'}">
+                <option value="Pending" ${c.status==='Pending'?'selected':''}>Pending</option>
+                <option value="Selected" ${c.status==='Selected'?'selected':''}>Selected ✅</option>
+                <option value="Waitlisted" ${c.status==='Waitlisted'?'selected':''}>Waitlisted ⏳</option>
+                <option value="Rejected" ${c.status==='Rejected'?'selected':''}>Not Qualified</option>
+              </select>
+            </td>
+            <td class="p-3 text-center">
+              <button onclick="deleteCandidate('${c.id}')" class="text-red-600 hover:text-red-800 text-xs font-bold">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
+
       document.getElementById('stat-total').innerText = candidatesData.length;
-      if (candidatesData.length > 0) {
-        let sumW = candidatesData.reduce((acc, c) => acc + (parseFloat(c.writtenScore)||0), 0);
-        let sumP = candidatesData.reduce((acc, c) => acc + (parseFloat(c.physicalScore)||0), 0);
-        let sumI = candidatesData.reduce((acc, c) => acc + (parseFloat(c.interviewScore)||0), 0);
-        
-        document.getElementById('stat-written').innerText = (sumW / candidatesData.length).toFixed(1) + " / 30";
-        document.getElementById('stat-physical').innerText = (sumP / candidatesData.length).toFixed(1) + " / 30";
-        document.getElementById('stat-interview').innerText = (sumI / candidatesData.length).toFixed(1) + " / 40";
-      }
+      let sumW = candidatesData.reduce((acc, c) => acc + (parseFloat(c.writtenScore)||0), 0);
+      let sumP = candidatesData.reduce((acc, c) => acc + (parseFloat(c.physicalScore)||0), 0);
+      let sumI = candidatesData.reduce((acc, c) => acc + (parseFloat(c.interviewScore)||0), 0);
+      
+      document.getElementById('stat-written').innerText = (sumW / candidatesData.length).toFixed(1) + " / 30";
+      document.getElementById('stat-physical').innerText = (sumP / candidatesData.length).toFixed(1) + " / 30";
+      document.getElementById('stat-interview').innerText = (sumI / candidatesData.length).toFixed(1) + " / 40";
     }
 
     function updateScore(id, field, val) {
@@ -411,7 +937,7 @@
       if (candidate) {
         candidate[field] = parseFloat(val) || 0;
         localStorage.setItem('ncc_candidates', JSON.stringify(candidatesData));
-        renderANODashboard();
+        populateTable();
       }
     }
 
@@ -424,16 +950,16 @@
     }
 
     function deleteCandidate(id) {
-      if (confirm("Delete this candidate entry?")) {
+      if (confirm("Delete this candidate record permanently?")) {
         candidatesData = candidatesData.filter(c => c.id !== id);
         localStorage.setItem('ncc_candidates', JSON.stringify(candidatesData));
-        renderANODashboard();
+        populateTable();
       }
     }
 
     function exportCSV() {
-      if (candidatesData.length === 0) return alert("No candidate data on this device to export!");
-      let csv = "Rank,Candidate ID,Name,Reg Roll No,Department,Phone,Physical Score (30),Written Score (30),Interview Score (40),Total Score (100),Status\n";
+      if (candidatesData.length === 0) return alert("No candidate data available to export!");
+      let csv = "Rank,Candidate ID,Name,Reg Roll No,Department,Mobile,Physical Score (30),Written Score (30),Interview Score (40),Total Score (100),Status\n";
       candidatesData.forEach((c, i) => {
         csv += `${i+1},"${c.id}","${c.name}","${c.roll}","${c.dept}","${c.phone}",${c.physicalScore||0},${c.writtenScore||0},${c.interviewScore||0},${c.totalScore||0},"${c.status}"\n`;
       });
@@ -449,7 +975,7 @@
     function saveWebhookUrl() {
       const url = document.getElementById('google-sheet-url').value.trim();
       localStorage.setItem('ncc_sheet_url', url);
-      alert("Google Apps Script URL saved successfully!");
+      alert("Google Apps Script Webhook URL saved successfully!");
     }
 
     function sendToGoogleSheet(data) {
