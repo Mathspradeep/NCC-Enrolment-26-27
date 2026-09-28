@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NCC Selection Portal & ANO Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .tab-active { border-bottom: 3px solid #1e3a8a; font-weight: bold; color: #1e3a8a; }
-  </style>
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 min-h-screen">
 
@@ -21,8 +18,8 @@
         <span class="text-xl font-bold tracking-wide">NCC SELECTION PORTAL</span>
       </div>
       <nav class="flex space-x-4 mt-2 sm:mt-0">
-        <button id="nav-student" onclick="switchTab('student')" class="px-4 py-2 rounded-lg bg-indigo-800 hover:bg-indigo-700 transition">Candidate Written Test</button>
-        <button id="nav-ano" onclick="switchTab('ano')" class="px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold transition">ANO Dashboard 🔒</button>
+        <button id="btn-student" onclick="switchTab('student')" class="px-4 py-2 rounded-lg bg-indigo-700 hover:bg-indigo-600 font-semibold transition">Candidate Test</button>
+        <button id="btn-ano" onclick="switchTab('ano')" class="px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold transition">ANO Dashboard 🔒</button>
       </nav>
     </div>
   </header>
@@ -33,10 +30,10 @@
     <!-- TAB 1: STUDENT WRITTEN TEST PORTAL -->
     <section id="tab-student-view" class="space-y-6">
       
-      <!-- Student Info Form (Before starting test) -->
+      <!-- Student Registration Form -->
       <div id="student-reg-card" class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto">
-        <h2 class="text-2xl font-bold text-indigo-900 mb-2">Written Test Registration</h2>
-        <p class="text-slate-600 text-sm mb-6">Format: 30 Multiple Choice Questions (1 Mark Each = 30 Marks Total). Location: NCC Class Room / Online.</p>
+        <h2 class="text-2xl font-bold text-indigo-900 mb-1">Written Test Registration</h2>
+        <p class="text-slate-600 text-sm mb-6">30 Multiple Choice Questions (1 Mark Each = 30 Marks Total). Marks will be kept confidential and accessible only by the ANO.</p>
         
         <form id="student-reg-form" onsubmit="startTest(event)" class="space-y-4">
           <div>
@@ -45,7 +42,7 @@
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-semibold mb-1">Reg/Roll No. / Application No *</label>
+              <label class="block text-sm font-semibold mb-1">Reg/Roll No. *</label>
               <input type="text" id="std-roll" required class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="e.g. 2026/NCC/102" />
             </div>
             <div>
@@ -55,19 +52,19 @@
           </div>
           <div>
             <label class="block text-sm font-semibold mb-1">Mobile Number *</label>
-            <input type="tel" id="std-phone" required pattern="[0-9]{10}" class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="10-digit phone number" />
+            <input type="tel" id="std-phone" required pattern="[0-9]{10}" class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" placeholder="10-digit mobile number" />
           </div>
 
           <button type="submit" class="w-full bg-indigo-800 hover:bg-indigo-900 text-white font-bold py-3 rounded-lg shadow-md transition">Start 30 MCQ Written Test</button>
         </form>
       </div>
 
-      <!-- Test Area (Hidden initially) -->
+      <!-- Test Area -->
       <div id="test-container" class="hidden bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
         <div class="flex justify-between items-center border-b pb-4 mb-6">
           <div>
             <h3 class="text-xl font-bold text-indigo-900" id="candidate-heading">Candidate: -</h3>
-            <p class="text-sm text-slate-500">30 Questions | Total Marks: 30</p>
+            <p class="text-sm text-slate-500">30 Questions | 1 Mark Each | Total: 30 Marks</p>
           </div>
           <div class="text-right">
             <span class="text-xs uppercase text-slate-500 font-semibold block">Time Remaining</span>
@@ -79,19 +76,19 @@
           <div id="questions-list" class="space-y-6"></div>
 
           <div class="pt-6 border-t flex justify-between items-center">
-            <p class="text-xs text-slate-500">Ensure all answers are checked before submitting.</p>
+            <p class="text-xs text-slate-500">Check all answers before submitting.</p>
             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition">Submit Test</button>
           </div>
         </form>
       </div>
 
-      <!-- Success Screen -->
+      <!-- Submission Success Screen -->
       <div id="success-card" class="hidden bg-white rounded-xl shadow-md p-8 max-w-md mx-auto text-center space-y-4">
         <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">✓</div>
-        <h3 class="text-2xl font-bold text-slate-800">Test Submitted Successfully!</h3>
-        <p class="text-slate-600 text-sm">Your answers have been recorded in the system and submitted to the Google Sheet log.</p>
-        <p class="text-xs text-amber-700 bg-amber-50 p-3 rounded-lg border border-amber-200">🔒 Note: Marks are confidential and accessible only by the Associate NCC Officer (ANO).</p>
-        <button onclick="resetTestForm()" class="bg-indigo-800 text-white px-6 py-2 rounded-lg hover:bg-indigo-900">Take Another Test / New Candidate</button>
+        <h3 class="text-2xl font-bold text-slate-800">Test Submitted!</h3>
+        <p class="text-slate-600 text-sm">Your responses have been saved and submitted to the selection log.</p>
+        <p class="text-xs text-amber-800 bg-amber-50 p-3 rounded-lg border border-amber-200">🔒 Marks are confidential and accessible only by the Associate NCC Officer (ANO).</p>
+        <button onclick="resetTestForm()" class="bg-indigo-800 text-white px-6 py-2 rounded-lg hover:bg-indigo-900 font-semibold">New Candidate Entry</button>
       </div>
 
     </section>
@@ -104,23 +101,23 @@
       <div id="ano-login-card" class="bg-white rounded-xl shadow-md p-6 max-w-md mx-auto">
         <div class="text-center mb-6">
           <span class="text-4xl">🎖️</span>
-          <h2 class="text-2xl font-bold text-indigo-900 mt-2">ANO Authentication</h2>
-          <p class="text-xs text-slate-500 mt-1">Authorized access only (Default PIN: <code class="bg-slate-200 px-1 py-0.5 rounded">ANO123</code>)</p>
+          <h2 class="text-2xl font-bold text-indigo-900 mt-2">ANO Login</h2>
+          <p class="text-xs text-slate-500 mt-1">Authorized access only (Passcode: <code class="bg-slate-200 px-1 py-0.5 rounded font-bold">ANO123</code>)</p>
         </div>
         <div class="space-y-4">
           <div>
-            <label class="block text-sm font-semibold mb-1">Enter ANO Passcode</label>
+            <label class="block text-sm font-semibold mb-1">Enter PIN</label>
             <input type="password" id="ano-pin" class="w-full border rounded-lg p-2.5 focus:ring-2 focus:ring-indigo-500 outline-none text-center text-lg tracking-widest" placeholder="••••••" />
           </div>
-          <button onclick="authenticateANO()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-bold py-2.5 rounded-lg transition">Unlock Dashboard</button>
-          <p id="login-error" class="text-red-500 text-xs text-center hidden">Invalid PIN. Please try again.</p>
+          <button onclick="authenticateANO()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-2.5 rounded-lg transition">Unlock Dashboard</button>
+          <p id="login-error" class="text-red-500 text-xs text-center hidden">Invalid Passcode. Please try again.</p>
         </div>
       </div>
 
-      <!-- ANO Main Dashboard (Hidden until login) -->
+      <!-- ANO Main Dashboard -->
       <div id="ano-dashboard-content" class="hidden space-y-6">
         
-        <!-- Summary Stats -->
+        <!-- Summary Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
           <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-indigo-600">
             <span class="text-xs font-semibold text-slate-500 uppercase">Total Candidates</span>
@@ -140,12 +137,12 @@
           </div>
         </div>
 
-        <!-- Dashboard Master Table -->
+        <!-- Master Scoreboard Table -->
         <div class="bg-white rounded-xl shadow-md p-6">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
               <h2 class="text-xl font-bold text-indigo-900">Selection Master Scoreboard</h2>
-              <p class="text-xs text-slate-500">Physical (CO/SM/PI Staff) | Written (Auto-fetched)[cite: 1] | Interview & Presentation (ANO/PI Staff)[cite: 1]</p>
+              <p class="text-xs text-slate-500">Physical (CO/SM/PI Staff) | Written (Auto-fetched) | Interview & Presentation (ANO/PI Staff)</p>
             </div>
             <div class="flex space-x-2">
               <button onclick="exportCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-sm font-semibold transition">Export Excel/CSV</button>
@@ -160,25 +157,25 @@
                 <tr class="bg-slate-100 text-slate-700 uppercase text-xs border-b">
                   <th class="p-3">Rank</th>
                   <th class="p-3">Candidate Info</th>
-                  <th class="p-3 text-center">Physical Fitness<br/><span class="text-[10px] text-slate-500 lowercase">(Max 30)[cite: 1]</span></th>
-                  <th class="p-3 text-center">Written Test<br/><span class="text-[10px] text-slate-500 lowercase">(Auto - Max 30)[cite: 1]</span></th>
-                  <th class="p-3 text-center">Interview & Pres.<br/><span class="text-[10px] text-slate-500 lowercase">(Max 40)[cite: 1]</span></th>
-                  <th class="p-3 text-center">Total Score<br/><span class="text-[10px] text-slate-500 lowercase">(Max 100)</span></th>
+                  <th class="p-3 text-center">Physical Fitness<br/><span class="text-[10px] text-slate-500 lowercase">(max 30)</span></th>
+                  <th class="p-3 text-center">Written Test<br/><span class="text-[10px] text-slate-500 lowercase">(auto - max 30)</span></th>
+                  <th class="p-3 text-center">Interview & Pres.<br/><span class="text-[10px] text-slate-500 lowercase">(max 40)</span></th>
+                  <th class="p-3 text-center">Total Score<br/><span class="text-[10px] text-slate-500 lowercase">(max 100)</span></th>
                   <th class="p-3 text-center">Status</th>
                   <th class="p-3 text-center">Action</th>
                 </tr>
               </thead>
               <tbody id="ano-table-body" class="divide-y divide-slate-200">
-                <!-- Rows dynamically populated -->
+                <!-- Dynamic Content -->
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- Google Sheets Integration Help Box -->
+        <!-- Google Sheet Integration Panel -->
         <div class="bg-indigo-50 rounded-xl p-5 border border-indigo-200 text-indigo-950 text-xs space-y-2">
-          <h4 class="font-bold text-sm text-indigo-900">🔗 Google Sheet Webhook Sync Status</h4>
-          <p>This web application can post all student responses directly to your Google Sheet. To connect your sheet, paste your deployed <strong>Google Apps Script Web App URL</strong> below:</p>
+          <h4 class="font-bold text-sm text-indigo-900">🔗 Google Sheet Webhook Link</h4>
+          <p>Paste your Google Apps Script Web App URL below to connect student test submissions to your spreadsheet:</p>
           <div class="flex gap-2">
             <input type="url" id="google-sheet-url" class="w-full border rounded p-2 text-xs" placeholder="https://script.google.com/macros/s/.../exec" />
             <button onclick="saveWebhookUrl()" class="bg-indigo-800 text-white px-4 py-2 rounded hover:bg-indigo-900 font-semibold">Save URL</button>
@@ -191,25 +188,25 @@
   </main>
 
   <script>
-    // ----------------------------------------------------
-    // 30 MCQ QUESTIONS DATA (1 Mark Each = 30 Marks)[cite: 1]
-    // ----------------------------------------------------
+    // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE IF YOU WANT IT PRE-CONFIGURED
+    const HARDCODED_SCRIPT_URL = ""; 
+
     const MCQ_QUESTIONS = [
       { id: 1, q: "What is the official motto of National Cadet Corps (NCC)?", options: ["Service Before Self", "Unity and Discipline", "Duty, Honour, Courage", "Always Fearless"], ans: 1 },
-      { id: 2, q: "In which year was the NCC formed in India?", options: ["1947", "1948", "1950", "1952"], ans: 1 },
-      { id: 3, q: "The headquarters of DG NCC is situated at which location?", options: ["Mumbai", "Dehradun", "New Delhi", "Lucknow"], ans: 2 },
-      { id: 4, q: "Who conducts the Physical Fitness Assessment in the selection process?", options: ["ANO only", "Commanding Officer (CO), Subedar Major (SM), and PI Staff", "Class Teacher", "Principal"], ans: 1 }, //[cite: 1]
-      { id: 5, q: "What is the full form of ANO in NCC?", options: ["Assistant NCC Officer", "Associate NCC Officer", "Army National Officer", "Area NCC Officer"], ans: 1 }, //[cite: 1]
-      { id: 6, q: "How many total marks does the Written Test carry?", options: ["20 Marks", "30 Marks", "50 Marks", "100 Marks"], ans: 1 }, //[cite: 1]
-      { id: 7, q: "What is the duration specified for the presentation in Stage 3?", options: ["2 minutes", "5 minutes", "10 minutes", "15 minutes"], ans: 1 }, //[cite: 1]
-      { id: 8, q: "Where is the Interview & Presentation stage conducted?", options: ["Ground", "NCC Class Room", "NCC Officer Room", "Principal Office"], ans: 2 }, //[cite: 1]
-      { id: 9, q: "In drill command 'Savdhan', what is the angle formed between the feet?", options: ["15 Degrees", "30 Degrees", "45 Degrees", "60 Degrees"], ans: 1 },
-      { id: 10, q: "Which of the following is the highest rank achievable by a Senior Division Cadet?", options: ["Junior Under Officer", "Senior Under Officer (SUO)", "Company Quarter Master", "Cadet Sergeant"], ans: 1 },
+      { id: 2, q: "In which year was the NCC established in India?", options: ["1947", "1948", "1950", "1952"], ans: 1 },
+      { id: 3, q: "Where is the headquarters of DG NCC located?", options: ["Mumbai", "Dehradun", "New Delhi", "Lucknow"], ans: 2 },
+      { id: 4, q: "Who conducts the Physical Fitness Assessment in the selection process?", options: ["ANO only", "Commanding Officer (CO), Subedar Major (SM), and PI Staff", "Class Teacher", "Principal"], ans: 1 },
+      { id: 5, q: "What is the full form of ANO in NCC?", options: ["Assistant NCC Officer", "Associate NCC Officer", "Army National Officer", "Area NCC Officer"], ans: 1 },
+      { id: 6, q: "How many total marks does the Written Test carry?", options: ["20 Marks", "30 Marks", "50 Marks", "100 Marks"], ans: 1 },
+      { id: 7, q: "What is the presentation duration in Stage 3?", options: ["2 minutes", "5 minutes", "10 minutes", "15 minutes"], ans: 1 },
+      { id: 8, q: "Where is Stage 3 (Interview and Presentation) conducted?", options: ["Ground", "NCC Class Room", "NCC Officer Room", "Principal Office"], ans: 2 },
+      { id: 9, q: "In drill position 'Savdhan', what is the angle formed between the feet?", options: ["15 Degrees", "30 Degrees", "45 Degrees", "60 Degrees"], ans: 1 },
+      { id: 10, q: "Which of the following is the highest rank for Senior Division Cadets?", options: ["Junior Under Officer", "Senior Under Officer (SUO)", "Company Quarter Master", "Cadet Sergeant"], ans: 1 },
       { id: 11, q: "What is the length of a normal pace in quick march?", options: ["20 inches", "30 inches", "45 inches", "12 inches"], ans: 1 },
-      { id: 12, q: "How many steps per minute are taken in Quick March (Tez Chal)?", options: ["110 steps", "120 steps", "135 steps", "140 steps"], ans: 1 },
-      { id: 13, q: "What is the full form of PI Staff in NCC?", options: ["Primary Instructor", "Permanent Instructor", "Physical Instructor", "Patrol Inspector"], ans: 1 }, //[cite: 1]
-      { id: 14, q: "Which cardinal rule of NCC drill emphasizes stillness?", options: ["No movement of eyes or body", "Talking allowed quietly", "Looking around", "Relaxing shoulders"], ans: 0 },
-      { id: 15, q: "What is the caliber of the standard .22 Rifle used in NCC target shooting?", options: ["0.22 inches", "0.30 inches", "7.62 mm", "5.56 mm"], ans: 0 },
+      { id: 12, q: "How many steps per minute are taken in Tez Chal (Quick March)?", options: ["110 steps", "120 steps", "135 steps", "140 steps"], ans: 1 },
+      { id: 13, q: "What is the full form of PI Staff in NCC?", options: ["Primary Instructor", "Permanent Instructor", "Physical Instructor", "Patrol Inspector"], ans: 1 },
+      { id: 14, q: "What is a key rule during NCC drill?", options: ["No movement of eyes or body", "Talking allowed quietly", "Looking around", "Relaxing shoulders"], ans: 0 },
+      { id: 15, q: "What is the caliber of the standard .22 Rifle used in NCC target firing?", options: ["0.22 inches", "0.30 inches", "7.62 mm", "5.56 mm"], ans: 0 },
       { id: 16, q: "In .22 Deluxe Rifle, what is the capacity of the magazine?", options: ["5 Rounds", "10 Rounds", "20 Rounds", "Single shot only"], ans: 0 },
       { id: 17, q: "What is the effective range of the .22 Deluxe Rifle?", options: ["25 yards", "50 yards", "100 yards", "200 yards"], ans: 0 },
       { id: 18, q: "Who is the Supreme Commander of the Indian Armed Forces?", options: ["Prime Minister", "Defense Minister", "President of India", "Chief of Defence Staff"], ans: 2 },
@@ -217,29 +214,26 @@
       { id: 20, q: "What does Light Blue color represent in the NCC flag?", options: ["Army", "Navy", "Air Force", "Coast Guard"], ans: 2 },
       { id: 21, q: "What does Red color in the NCC flag represent?", options: ["Army", "Navy", "Air Force", "Police"], ans: 0 },
       { id: 22, q: "What does Dark Blue color in the NCC flag represent?", options: ["Army", "Navy", "Air Force", "Border Security"], ans: 1 },
-      { id: 23, q: "The Indian Military Academy (IMA) is located in which city?", options: ["Pune", "Dehradun", "Chennai", "Gwalior"], ans: 1 },
-      { id: 24, q: "The National Defence Academy (NDA) is situated at:", options: ["Khadakwasla, Pune", "Wellington", "Hyderabad", "Mhow"], ans: 0 },
-      { id: 25, q: "Complete the series: 2, 6, 12, 20, 30, ?", options: ["36", "40", "42", "48"], ans: 2 },
-      { id: 26, q: "If A = 1, CAT = 24, then DOG = ?", options: ["26", "28", "26", "26"], ans: 1 }, // D(4)+O(15)+G(7) = 26 wait: 4+15+7 = 26.
-      { id: 27, q: "Which section of written test evaluates general awareness?", options: ["MCQ Section", "Drawing Section", "Physical Run", "Medical"], ans: 0 }, //[cite: 1]
-      { id: 28, q: "Who is responsible for conducting Stage 3 Interview?", options: ["ANO & College PI Staff", "Students Council", "Sports Officer", "Subedar Major alone"], ans: 0 }, //[cite: 1]
-      { id: 29, q: "What is the full form of CO in the selection panel?", options: ["Chief Officer", "Commanding Officer", "Central Officer", "Cadet Officer"], ans: 1 }, //[cite: 1]
-      { id: 30, q: "What is the main purpose of the Written Test in NCC Selection?", options: ["To test physical agility", "To evaluate general knowledge and aptitude", "To test voice volume", "To check height"], ans: 1 } //[cite: 1]
+      { id: 23, q: "Where is the Indian Military Academy (IMA) situated?", options: ["Pune", "Dehradun", "Chennai", "Gwalior"], ans: 1 },
+      { id: 24, q: "The National Defence Academy (NDA) is located at:", options: ["Khadakwasla, Pune", "Wellington", "Hyderabad", "Mhow"], ans: 0 },
+      { id: 25, q: "Find the missing number in the sequence: 2, 6, 12, 20, 30, ?", options: ["36", "40", "42", "48"], ans: 2 },
+      { id: 26, q: "If A = 1, CAT = 24, then DOG = ?", options: ["24", "26", "28", "30"], ans: 1 },
+      { id: 27, q: "What format is used for evaluating candidates in Stage 2 Written Test?", options: ["Multiple Choice Questions (MCQ)", "Essay Writing", "Drawing Test", "Oral Quiz"], ans: 0 },
+      { id: 28, q: "Who conducts Stage 3 (Interview and Presentation)?", options: ["ANO and College PI Staff", "Students Union", "Sports Officer", "Commanding Officer alone"], ans: 0 },
+      { id: 29, q: "What does CO stand for in the physical assessment board?", options: ["Chief Officer", "Commanding Officer", "Central Officer", "Cadet Officer"], ans: 1 },
+      { id: 30, q: "What is the primary purpose of the Written Test in NCC Selection?", options: ["To assess general knowledge and aptitude", "To check running speed", "To test voice loudness", "To check physical height"], ans: 0 }
     ];
 
-    // Global State
     let candidatesData = JSON.parse(localStorage.getItem('ncc_candidates') || '[]');
     let currentStudent = null;
     let timerInterval = null;
-    let isAnoAuthenticated = false;
 
-    // Load initial state
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('google-sheet-url').value = localStorage.getItem('ncc_sheet_url') || '';
+      const savedUrl = localStorage.getItem('ncc_sheet_url') || HARDCODED_SCRIPT_URL;
+      document.getElementById('google-sheet-url').value = savedUrl;
       renderQuestions();
     });
 
-    // Navigation Switcher
     function switchTab(tab) {
       if (tab === 'student') {
         document.getElementById('tab-student-view').classList.remove('hidden');
@@ -250,12 +244,11 @@
       }
     }
 
-    // Render 30 Questions
     function renderQuestions() {
       const container = document.getElementById('questions-list');
       container.innerHTML = MCQ_QUESTIONS.map((item, index) => `
         <div class="p-4 border rounded-lg bg-slate-50 space-y-3">
-          <p class="font-semibold text-slate-800"><span class="text-indigo-800">Q${index + 1}.</span> ${item.q}</p>
+          <p class="font-semibold text-slate-800"><span class="text-indigo-800 font-bold">Q${index + 1}.</span> ${item.q}</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
             ${item.options.map((opt, optIdx) => `
               <label class="flex items-center space-x-2 bg-white p-2.5 rounded border hover:bg-indigo-50 cursor-pointer transition">
@@ -268,7 +261,6 @@
       `).join('');
     }
 
-    // Start Test
     function startTest(e) {
       e.preventDefault();
       currentStudent = {
@@ -278,16 +270,15 @@
         dept: document.getElementById('std-dept').value.trim(),
         phone: document.getElementById('std-phone').value.trim(),
         writtenScore: 0,
-        physicalScore: 0, // Enterable by ANO[cite: 1]
-        interviewScore: 0, // Enterable by ANO[cite: 1]
-        status: 'Pending Evaluation'
+        physicalScore: 0,
+        interviewScore: 0,
+        status: 'Pending'
       };
 
       document.getElementById('student-reg-card').classList.add('hidden');
       document.getElementById('test-container').classList.remove('hidden');
       document.getElementById('candidate-heading').innerText = `Candidate: ${currentStudent.name} (${currentStudent.roll})`;
 
-      // Timer 30 Minutes
       let timeLeft = 30 * 60;
       timerInterval = setInterval(() => {
         timeLeft--;
@@ -301,7 +292,6 @@
       }, 1000);
     }
 
-    // Submit Written Test
     function submitWrittenTest(e) {
       e.preventDefault();
       clearInterval(timerInterval);
@@ -316,14 +306,12 @@
         }
       });
 
-      currentStudent.writtenScore = score; // Out of 30[cite: 1]
+      currentStudent.writtenScore = score;
       currentStudent.timestamp = new Date().toLocaleString();
 
-      // Save to local list
       candidatesData.push(currentStudent);
       localStorage.setItem('ncc_candidates', JSON.stringify(candidatesData));
 
-      // Post to Google Sheet if Webhook URL present
       sendToGoogleSheet(currentStudent);
 
       document.getElementById('test-container').classList.add('hidden');
@@ -337,11 +325,9 @@
       document.getElementById('student-reg-card').classList.remove('hidden');
     }
 
-    // ANO Authentication
     function authenticateANO() {
       const pin = document.getElementById('ano-pin').value;
-      if (pin === 'ANO123') { // Default Passcode
-        isAnoAuthenticated = true;
+      if (pin === 'ANO123') {
         document.getElementById('ano-login-card').classList.add('hidden');
         document.getElementById('ano-dashboard-content').classList.remove('hidden');
         renderANODashboard();
@@ -351,29 +337,25 @@
     }
 
     function lockDashboard() {
-      isAnoAuthenticated = false;
       document.getElementById('ano-pin').value = '';
       document.getElementById('ano-login-card').classList.remove('hidden');
       document.getElementById('ano-dashboard-content').classList.add('hidden');
     }
 
-    // Render ANO Dashboard Table & Stats
     function renderANODashboard() {
       candidatesData = JSON.parse(localStorage.getItem('ncc_candidates') || '[]');
       
-      // Calculate total marks and sort by rank
       candidatesData.forEach(c => {
         c.totalScore = (parseFloat(c.physicalScore) || 0) + (parseFloat(c.writtenScore) || 0) + (parseFloat(c.interviewScore) || 0);
       });
 
-      // Sort by total score descending
       candidatesData.sort((a, b) => b.totalScore - a.totalScore);
 
       const tbody = document.getElementById('ano-table-body');
       tbody.innerHTML = '';
 
       if (candidatesData.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400">No candidates have taken the test yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400">No candidates have taken the test on this browser yet. Check your Google Sheet for all incoming responses!</td></tr>`;
       } else {
         candidatesData.forEach((c, idx) => {
           tbody.innerHTML += `
@@ -384,23 +366,18 @@
                 <div class="text-xs text-slate-500">${c.roll} | ${c.dept}</div>
                 <div class="text-[10px] text-slate-400">Phone: ${c.phone}</div>
               </td>
-              <!-- Physical Fitness Mark (Entered by ANO) -->
               <td class="p-3 text-center">
                 <input type="number" min="0" max="30" value="${c.physicalScore}" onchange="updateScore('${c.id}', 'physicalScore', this.value)" class="w-16 border rounded text-center py-1 text-sm font-semibold focus:ring-2 focus:ring-indigo-500" />
               </td>
-              <!-- Written Test Mark (Fetched from Student Submission) -->
-              <td class="p-3 text-center font-bold text-blue-700 bg-blue-50/50 rounded">
+              <td class="p-3 text-center font-bold text-blue-700 bg-blue-50/60 rounded">
                 ${c.writtenScore} / 30
               </td>
-              <!-- Interview & Presentation Mark (Entered by ANO) -->
               <td class="p-3 text-center">
                 <input type="number" min="0" max="40" value="${c.interviewScore}" onchange="updateScore('${c.id}', 'interviewScore', this.value)" class="w-16 border rounded text-center py-1 text-sm font-semibold focus:ring-2 focus:ring-indigo-500" />
               </td>
-              <!-- Total Calculated Mark -->
               <td class="p-3 text-center font-extrabold text-indigo-900 text-base">
                 ${c.totalScore} / 100
               </td>
-              <!-- Status -->
               <td class="p-3 text-center">
                 <select onchange="updateStatus('${c.id}', this.value)" class="text-xs border rounded p-1 font-semibold ${c.status==='Selected'?'text-green-700 bg-green-50':c.status==='Waitlisted'?'text-amber-700 bg-amber-50':'text-slate-700'}">
                   <option value="Pending" ${c.status==='Pending'?'selected':''}>Pending</option>
@@ -417,7 +394,6 @@
         });
       }
 
-      // Update Statistics
       document.getElementById('stat-total').innerText = candidatesData.length;
       if (candidatesData.length > 0) {
         let sumW = candidatesData.reduce((acc, c) => acc + (parseFloat(c.writtenScore)||0), 0);
@@ -448,7 +424,7 @@
     }
 
     function deleteCandidate(id) {
-      if (confirm("Are you sure you want to delete this candidate entry?")) {
+      if (confirm("Delete this candidate entry?")) {
         candidatesData = candidatesData.filter(c => c.id !== id);
         localStorage.setItem('ncc_candidates', JSON.stringify(candidatesData));
         renderANODashboard();
@@ -456,7 +432,7 @@
     }
 
     function exportCSV() {
-      if (candidatesData.length === 0) return alert("No data to export!");
+      if (candidatesData.length === 0) return alert("No candidate data on this device to export!");
       let csv = "Rank,Candidate ID,Name,Reg Roll No,Department,Phone,Physical Score (30),Written Score (30),Interview Score (40),Total Score (100),Status\n";
       candidatesData.forEach((c, i) => {
         csv += `${i+1},"${c.id}","${c.name}","${c.roll}","${c.dept}","${c.phone}",${c.physicalScore||0},${c.writtenScore||0},${c.interviewScore||0},${c.totalScore||0},"${c.status}"\n`;
@@ -466,7 +442,7 @@
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.setAttribute('href', url);
-      a.setAttribute('download', `NCC_Selection_Merit_List_${new Date().toISOString().slice(0,10)}.csv`);
+      a.setAttribute('download', `NCC_Selection_Merit_List.csv`);
       a.click();
     }
 
@@ -477,7 +453,7 @@
     }
 
     function sendToGoogleSheet(data) {
-      const sheetUrl = localStorage.getItem('ncc_sheet_url');
+      const sheetUrl = localStorage.getItem('ncc_sheet_url') || HARDCODED_SCRIPT_URL;
       if (!sheetUrl) return;
 
       fetch(sheetUrl, {
